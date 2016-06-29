@@ -1,0 +1,75 @@
+This file lists out the key functionality of the various classes
+
+In object oriented programming there is always a constructor method. 
+This is used to create an instance of that type of object. These are implemented as such:
+
+AF_Shield mybot(1,2);
+
+-> AF_Shield denotes the object type that is being created. A list of classes and their methods is shown below.
+-> mybot is the name given to the object being created. Provided they have different names, multipul 
+	instances of the same type of object can be created which is useful for implementing line
+	or collision sensors
+-> The arguments then relate to whatever fields are required for the constructor method. In this case 
+	the constructor needed the screw terminal numbers that were to be used on the board for the motors.
+
+
+
+In order to access any of the methods of an object they must accessed as such:
+
+mybot.drive(100);
+
+-> mybot is the name given to the object
+-> when accessing an objects methods a full stop ('.') is required
+-> drive is a method of the AF_Shield class, which sets the motors to turn in the same direction
+-> the arguments are included in the brackets, some methods may have no arguments or many. In 
+	this case the arguemnt is the speed to turn the motors at, which is a value between -100 
+	and 100. Negitive being reverse driving and positive being forward driving
+
+
+I will now list the classes available and describe their methods. I have tried to keep the method 
+names similar for different motor drivers for ease of use.
+
+AF_Shield:					(Adafruit motor shield V1, http://www.elecfreaks.com/wiki/images/thumb/1/19/Arduino_Shield_Motor_01.jpg/350px-Arduino_Shield_Motor_01.jpg)
+-> AF_Shield (arg1, arg2)			constructor method described above
+-> drive (arg1)					turn motors in same direction and speed arg1
+-> turn_left(arg1)				turn motors in oposite direction at speed arg1
+-> turn_right(arg1)				turn motors in oposite direction at speed arg1
+-> arc(arg1, arg2)				turn motors at different speeds 
+
+L298N:						(motor driver using L298N chip, http://www.haoyuelectronics.com/Attachment/L298N_module/2.jpg)
+-> L298N ()    					default constructor, attaches to pins 6-11
+-> L298N(ENA,IN1,IN2,IN3,IN4,ENB) 		select specific pins
+-> void set_pins(ENA,IN1,IN2,IN3,IN4,ENB)	set pins after object created
+-> drive (arg1)					turn motors in same direction and speed arg1
+-> turn_left(arg1)				turn motors in oposite direction at speed arg1
+-> turn_right(arg1)				turn motors in oposite direction at speed arg1
+-> arc(arg1, arg2)				turn motors at different speeds 
+
+Monster:					(monster motor shield, https://cdn.sparkfun.com//assets/parts/4/4/9/1/10182-01.jpg)
+-> Monster()					Constructor, cant change pins so no user defined arguments
+-> drive (arg1)					turn motors in same direction and speed arg1
+-> turn_left(arg1)				turn motors in oposite direction at speed arg1
+-> turn_right(arg1)				turn motors in oposite direction at speed arg1
+-> arc(arg1, arg2)				turn motors at different speeds 
+
+
+
+HC_SR04:					(Ultrasonic distance sensor, http://www.ezsbc.com/media/catalog/product/cache/1/image/800x800/9df78eab33525d08d6e5fb8d27136e95/r/t/rtk-hcsr04-1.jpg)
+-> HC_SR04 (int trig, int echo)  		constructor to attach object to two pins, one trig and one echo
+-> HC_SR04 (int pin)    			alternate constructor in case that trig and echo are wired together
+-> ping ()					get distance and return as centimeters
+
+digitalLine:					(digital line sensor, http://www.vetco.net/catalog/images/VUPN6320-1.jpg)
+-> digitalLine(int pin1)			constructor to attach line sensor to pin1
+-> int read_sensor()				return the value, either 1 or 0, from the sensor
+
+analogLine:					(analog line sensor, https://cdn.solarbotics.com/products/photos/dc212708f721b7882838023a778dfaec/qrd1114.jpg)
+-> analogLine(int pin1)				constructor to attach sensor to pin1
+-> int read_sensor()				read the digital value of sensor, interprets analog value as 1 or 0 based on threshold
+-> void set_threshold(int thresh)		set the threshold which the sensors value is evaluate with respect to
+
+collision:					(collison sensor, http://cdn3.volusion.com/abccm.ugtmf/v/vspfiles/photos/Limit_Kit-3.jpg?1443441914)
+-> collision(int pin1)				constructor to attach collision sensor to pin1
+-> int state()					return the state of the sensor, either closed or open, 1 or 0
+
+
