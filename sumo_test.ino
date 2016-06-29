@@ -9,7 +9,8 @@
 /*class object names:
 
 AF_Shield     Adafruit motor shield v1
-L298N         H bridge shield  
+L298N         H bridge shield
+Monster       Monster motor shield  
 
 HC_RC04       Standard ultrasonic distance sensor
 digitalLine   digital line sensor (NOTE: can be attached to any free pins)
