@@ -1,3 +1,6 @@
+//This code is based off the big dade sumobot code written Cormac OMeadhra and 
+//has been adapted for integration into this project. 
+
 //class for the monster motor driver shield
 
 class Monster{

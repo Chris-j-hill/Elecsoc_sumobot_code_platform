@@ -20,8 +20,6 @@ void drive(int Value);
 void turn_left(int Value);    
 void turn_right(int Value);
 void arc(int Value1, int Value2);
-
-
-  
+ 
 };
 
