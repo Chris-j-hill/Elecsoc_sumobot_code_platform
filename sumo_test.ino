@@ -35,7 +35,7 @@ include epmty brackets (eg L298N mybot;)
 
 HC_SR04 distance(9,10);    //distance sensor attached to digital 9 and 10 which are the servo pin headers on adafruit motor shield
 AF_Shield mybot(1,2);      //adafruit motor shield configured to use terminal block 1 as left and terminal block 2 as right
-L298N mybot2; 
+ 
 
 
 void setup() {
@@ -62,7 +62,7 @@ void loop() {
 Serial.println(distance.ping());  //print out the distance 
 
 delay(1000);
+mybot.drive(100);
 
-mybot2.drive(100);
 }
 
