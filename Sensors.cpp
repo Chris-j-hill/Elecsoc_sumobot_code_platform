@@ -71,8 +71,19 @@ analogLine::analogLine(int pin1){
 }
 
 int analogLine::read_sensor(){
-  int temp = analogRead(pin);
+  
+int temp;
 
+  if(pin >= 14 && pin <= 19)
+  temp = analogRead(pin);
+
+  else {
+    Serial.println("WARNING: reading an analog input using a digital pin, reading will not be accurate");
+    temp = digitalRead(pin);
+    return(temp);
+  }
+
+  
   if (temp > threshold){
     return (1);
   }

@@ -9,6 +9,7 @@
     // copyright Adafruit Industries LLC, 2009
     // this code is public domain, enjoy!
 
+//#include "functions.h"
 
 #if (ARDUINO >= 100)
   #include "Arduino.h"
@@ -346,6 +347,7 @@ switch (motor2) {
 
   int modValue = abs(Value);      // Get the absolute speed value and map to byte value
   int Speed = map(modValue, 0, 100, 0, 255);
+  Speed = (Speed);
   
   if (Value <0){      //drive backwards
     if (Value <= -100)   { Value = -100;}  //correct value if outside range
