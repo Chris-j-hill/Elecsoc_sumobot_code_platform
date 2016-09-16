@@ -24,7 +24,7 @@ Sensor objects only limited by free pins
 Check out the txt file for a better description of the classes and their methods
 
 Note: in order to get default constructors to compile (ie when creating an object with no input variables) do not 
-include epmty brackets (eg L298N mybot;) 
+include empty brackets (eg L298N mybot; not L298N mybot();) 
 */
 
 

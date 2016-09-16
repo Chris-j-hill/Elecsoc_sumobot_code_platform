@@ -1,16 +1,19 @@
 This file lists out the key functionality of the various classes
 
 In object oriented programming there is always a constructor method. 
-This is used to create an instance of that type of object. These are implemented as such:
+This is used to create an instance of that type of object in your code. These are implemented as such:
 
 AF_Shield mybot(1,2);
 
--> AF_Shield denotes the object type that is being created. A list of classes and their methods is shown below.
+-> AF_Shield denotes the object type that is being created. A list of classes and their methods is shown below. 
+	In this case we want to create an instance of the AF_Shield since we are using the Adafruit motor 
+	shield in our design, though this should be changed to reflect the shield used if it is different
 -> mybot is the name given to the object being created. Provided they have different names, multipul 
-	instances of the same type of object can be created which is useful for implementing line
-	or collision sensors
--> The arguments then relate to whatever fields are required for the constructor method. In this case 
-	the constructor needed the screw terminal numbers that were to be used on the board for the motors.
+	instances of the same type of object can be created which is useful for implementing several line
+	or collision sensors. 
+-> The arguments (number in brackets) then relate to whatever fields are required for the constructor method. 
+	In this case the constructor needed the screw terminal numbers that were to be used on the board for 
+	the motors, but other shields will require different arguments, so check the class constructor below first
 
 
 
@@ -18,9 +21,10 @@ In order to access any of the methods of an object they must accessed as such:
 
 mybot.drive(100);
 
--> mybot is the name given to the object
+-> mybot is the name given to the object as described above
 -> when accessing an objects methods a full stop ('.') is required
--> drive is a method of the AF_Shield class, which sets the motors to turn in the same direction
+-> drive is a method of the AF_Shield class, which sets the motors to turn in the same direction, 
+	though other methods such as turn or arc are available
 -> the arguments are included in the brackets, some methods may have no arguments or many. In 
 	this case the arguemnt is the speed to turn the motors at, which is a value between -100 
 	and 100. Negitive being reverse driving and positive being forward driving
@@ -28,6 +32,8 @@ mybot.drive(100);
 
 I will now list the classes available and describe their methods. I have tried to keep the method 
 names similar for different motor drivers for ease of use.
+
+------  Motor Shields  -------
 
 AF_Shield:					(Adafruit motor shield V1, http://www.elecfreaks.com/wiki/images/thumb/1/19/Arduino_Shield_Motor_01.jpg/350px-Arduino_Shield_Motor_01.jpg)
 -> AF_Shield (arg1, arg2)			constructor method described above
@@ -52,6 +58,17 @@ Monster:					(monster motor shield, https://cdn.sparkfun.com//assets/parts/4/4/9
 -> turn_right(arg1)				turn motors in oposite direction at speed arg1
 -> arc(arg1, arg2)				turn motors at different speeds 
 
+
+Elecsoc_driver_v1:
+-> Elecsoc_driver_v1()				Constructor, cant change pins so no user defined arguments
+-> drive (arg1)					turn motors in same direction and speed arg1
+-> turn_left(arg1)				turn motors in oposite direction at speed arg1
+-> turn_right(arg1)				turn motors in oposite direction at speed arg1
+-> arc(arg1, arg2)				turn motors at different speeds 
+
+
+
+------  Sensors  -------
 
 
 HC_SR04:					(Ultrasonic distance sensor, http://www.ezsbc.com/media/catalog/product/cache/1/image/800x800/9df78eab33525d08d6e5fb8d27136e95/r/t/rtk-hcsr04-1.jpg)
