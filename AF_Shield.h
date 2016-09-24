@@ -78,16 +78,26 @@ class AFMotorController
 class AF_Shield
 {
  public:
-  AF_Shield(uint8_t motor1, uint8_t motor2, uint8_t freq = DC_MOTOR_PWM_RATE);
+  
+  //    constructor
+  AF_Shield(uint8_t motor1, uint8_t motor2, float scale, uint8_t freq = DC_MOTOR_PWM_RATE);
+  
+  
+  //    drive methods
   void drive(int Value);      //drive frowards or backward in straight line
   void setSpeed(uint8_t speed);     //set the speed without changing the current drive state
   void turn_left(int Value);  //turn motors in oposite directions at equal rates
   void turn_right(int Value);
   void arc(int Value1, int Value2);  //specify exact motor speeds for traveling in an arc
+  
 
+  //    voltage scaling controls
+  void set_voltage_scale(float scale); //change voltage scaling multiplier
+  float return_voltage_scaling();      //read voltage scaling
 
  private:
   uint8_t motor1, motor2, pwmfreq;
+  float voltage_scale;
 };
 
 uint8_t getlatchstate(void);

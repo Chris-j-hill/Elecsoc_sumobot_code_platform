@@ -9,7 +9,7 @@
     // copyright Adafruit Industries LLC, 2009
     // this code is public domain, enjoy!
 
-//#include "functions.h"
+//#include "functions"
 
 #if (ARDUINO >= 100)
   #include "Arduino.h"
@@ -251,7 +251,9 @@ inline void setPWM4(uint8_t s) {
 
 
 
-AF_Shield::AF_Shield(uint8_t num1, uint8_t num2, uint8_t freq) {
+AF_Shield::AF_Shield(uint8_t num1, uint8_t num2, float scale, uint8_t freq) {
+
+  voltage_scale = scale;
 
   if (num1 ==num2) {       //error prevention, will stop same terminal being set as both motors
     Serial.println("motor terminals cannot be the same for both motors");
@@ -344,10 +346,11 @@ switch (motor2) {
   default:
     return;
   }
-
+  
   int modValue = abs(Value);      // Get the absolute speed value and map to byte value
-  int Speed = map(modValue, 0, 100, 0, 255);
-  Speed = (Speed);
+  int Speed = map(modValue, 0, 100, 0, voltage_scale*255);
+  Serial.println(voltage_scale);
+  
   
   if (Value <0){      //drive backwards
     if (Value <= -100)   { Value = -100;}  //correct value if outside range
@@ -451,10 +454,8 @@ switch (motor2) {
   }
 
   int modValue = abs(Value);      // Get the absolute speed value and map to byte value
-  int Speed = map(modValue, 0, 100, 0, 255);
-  Serial.println(Value);
-  Serial.println(modValue);
-  Serial.println(Speed);
+  int Speed = map(modValue, 0, 100, 0, voltage_scale*255);
+  
 
   if (Value <0){      //turn right, incase negative speed entered
     if (Value <= -100)   { Value = -100;}  //correct value if outside range
@@ -532,10 +533,8 @@ switch (motor2) {
   }
 
   int modValue = abs(Value);      // Get the absolute speed value and map to byte value
-  int Speed = map(modValue, 0, 100, 0, 255);
-  Serial.println(Value);
-  Serial.println(modValue);
-  Serial.println(Speed);
+  int Speed = map(modValue, 0, 100, 0, voltage_scale*255);
+  
 
   if (Value <0){      //turn left, incase negative speed entered
     if (Value <= -100)   { Value = -100;}  //correct value if outside range
@@ -617,10 +616,10 @@ switch (motor2) {
   }
 
   int modValue1 = abs(Value1);      // Get the absolute speed value and map to byte value
-  int Speed1 = map(modValue1, 0, 100, 0, 255);
+  int Speed1 = map(modValue1, 0, 100, 0, voltage_scale*255);
 
   int modValue2 = abs(Value2);      // Get the absolute speed value and map to byte value
-  int Speed2 = map(modValue2, 0, 100, 0, 255);
+  int Speed2 = map(modValue2, 0, 100, 0, voltage_scale*255);
 
   if (Value1 <0){      //turn motor 1 backwards
     if (Value1 <= -100)   { Value1 = -100;}  //correct value if outside range
@@ -686,7 +685,17 @@ if (Value2 <0){      //turn motor 1 backwards
 }
 
 
+void AF_Shield::set_voltage_scale(float scaling){     //method to change the output voltage stepdown scaling mid program
+  
+  voltage_scale = scaling;                            //NOTE: do not use this method without full understanding of the result
+                                                      //of changing the scaling factor (ie added strain on motors/drivers)
+  
+}
 
+
+float AF_Shield::return_voltage_scaling(){            //return the stepdown voltage scaling factor
+  return voltage_scale;
+}
   
 
 

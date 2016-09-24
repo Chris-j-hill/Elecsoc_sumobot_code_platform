@@ -24,12 +24,16 @@ Sensor objects only limited by free pins
 Check out the txt file for a better description of the classes and their methods
 
 Note: in order to get default constructors to compile (ie when creating an object with no input variables) do not 
-include empty brackets (eg L298N mybot; not L298N mybot();) 
+include empty brackets (eg L298N mybot; not L298N mybot(); ) 
 */
 
 
+float scale = voltage_map();        //from the functions file, scales voltage output to match motor rated limit voltage
+                                    //NOTE: please go to this file and make sure the voltage values are set correctly for you
 
-AF_Shield mybot(1,2);        //adafruit motor shield configured to use terminal block 1 as left and terminal block 2 as right
+
+
+AF_Shield mybot(1,3, scale);        //adafruit motor shield configured to use terminal block 1 as left and terminal block 2 as right
 
 HC_SR04 distance(14, 15);    //distance sensor attached to Analog pin A0 (also called pin 14) and A1 (15) 
 digitalLine left_line (16);  //line sensor connected to A3 (also called pin 16)
@@ -51,7 +55,7 @@ int temp;
 mybot.drive(100);               //drive forward for 3 seconds
 Serial.println("forward");
 delay(3000);
-
+/*
 mybot.drive(-100);              //reverse for 3 seconds
 Serial.println("backwards");
 delay(3000);
@@ -77,7 +81,9 @@ delay(10);
 temp = right_line.read_sensor();  //reuse temp variable, set it to right line sensor reading
 Serial.print("see line right: ");
 Serial.println(temp);
-delay(10);
+delay(10)*/
+
+mybot.drive(100);
 
 
 }

@@ -2,7 +2,7 @@
 #include "L298N.h"
 #include "arduino.h"
 
-L298N::L298N(){ //default constructor, uses pins 6-11 in order of pins on board, ena, in1, in2, in3, in4, enb
+L298N::L298N(float scale){ //default constructor, uses pins 6-11 in order of pins on board, ena, in1, in2, in3, in4, enb
   enA = 6;
   enB = 7;
   in1 = 8;
@@ -22,13 +22,15 @@ L298N::L298N(){ //default constructor, uses pins 6-11 in order of pins on board,
 
 
 
-L298N::L298N(int ENA, int IN1, int IN2, int IN3, int IN4, int ENB){   //secondary constructor, set pins directly so as to suit those used
+L298N::L298N(int ENA, int IN1, int IN2, int IN3, int IN4, int ENB, float scale){   //secondary constructor, set pins directly so as to suit those used
   enA = ENA;
   enB = ENB;
   in1 = IN1;
   in2 = IN2;
   in3 = IN3;
   in4 = IN4;
+
+  float voltage_scale = scale;
 
   pinMode(enA, OUTPUT);
   pinMode(enB, OUTPUT);
@@ -74,7 +76,7 @@ void L298N::drive(int Value){
     if (Value>=0){   // drive forward
       if (Value>=100){ Value=100;} //change to limit if outside limit
 
-    int Speed = map(Value,0,100, 0, 255); //map Value to 8 bit Speed
+    int Speed = map(Value,0,100, 0, voltage_scale*255); //map Value to 8 bit Speed
 
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
@@ -90,7 +92,7 @@ void L298N::drive(int Value){
     else if (Value<0){   // drive backwards
       if (Value<=-100){ Value = -100;} //change to limit if outside limit
 
-    int Speed = map(Value,-100,0,255, 0);
+    int Speed = map(Value,-100,0,voltage_scale*255, 0);
 
     digitalWrite(in1, LOW);
     digitalWrite(in2, HIGH);
@@ -107,7 +109,7 @@ void L298N:: turn_left(int Value){
     if (Value>=0){   // turn left
       if (Value>=100){ Value=100;} //change to limit if outside limit
 
-    int Speed = map(Value,0,100, 0, 255); //map Value to 8 bit Speed
+    int Speed = map(Value,0,100, 0, voltage_scale*255); //map Value to 8 bit Speed
 
     digitalWrite(in1, LOW);
     digitalWrite(in2, HIGH);
@@ -123,7 +125,7 @@ void L298N:: turn_left(int Value){
     else if (Value<0){   // turn right
       if (Value<=-100){ Value = -100;} //change to limit if outside limit
 
-    int Speed = map(Value,-100,0,255, 0);
+    int Speed = map(Value,-100,0,voltage_scale*255, 0);
 
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
@@ -144,7 +146,7 @@ void L298N:: turn_right(int Value){
     if (Value>=0){   // turn right
       if (Value>=100){ Value=100;} //change to limit if outside limit
 
-    int Speed = map(Value,0,100, 0, 255); //map Value to 8 bit Speed
+    int Speed = map(Value,0,100, 0, voltage_scale*255); //map Value to 8 bit Speed
 
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
@@ -160,7 +162,7 @@ void L298N:: turn_right(int Value){
     else if (Value<0){   // turn left
       if (Value<=-100){ Value = -100;} //change to limit if outside limit
 
-    int Speed = map(Value,-100,0,255, 0);
+    int Speed = map(Value,-100,0,voltage_scale*255, 0);
 
     digitalWrite(in1, LOW);
     digitalWrite(in2, HIGH);
@@ -179,7 +181,7 @@ void L298N:: arc(int Value1, int Value2){   //arc, turn motors at differnet spee
     if (Value1>=0){   // drive forward
       if (Value1>=100){ Value1=100;} //change to limit if outside limit
 
-    int Speed1 = map(Value1,0,100, 0, 255); //map Value to 8 bit Speed
+    int Speed1 = map(Value1,0,100, 0, voltage_scale*255); //map Value to 8 bit Speed
 
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
@@ -194,7 +196,7 @@ void L298N:: arc(int Value1, int Value2){   //arc, turn motors at differnet spee
     else if (Value1<0){   // drive backwards
       if (Value1<=-100){ Value1 = -100;} //change to limit if outside limit
 
-    int Speed1 = map(Value1,-100,0,255, 0);
+    int Speed1 = map(Value1,-100,0,voltage_scale*255, 0);
 
     digitalWrite(in1, LOW);
     digitalWrite(in2, HIGH);
@@ -208,7 +210,7 @@ void L298N:: arc(int Value1, int Value2){   //arc, turn motors at differnet spee
     if (Value2>=0){   // drive forward
       if (Value2>=100){ Value2=100;} //change to limit if outside limit
 
-    int Speed2 = map(Value2,0,100, 0, 255); //map Value to 8 bit Speed
+    int Speed2 = map(Value2,0,100, 0, voltage_scale*255); //map Value to 8 bit Speed
 
     
     digitalWrite(in3, LOW);
@@ -223,7 +225,7 @@ void L298N:: arc(int Value1, int Value2){   //arc, turn motors at differnet spee
     else if (Value2<0){   // drive backwards
       if (Value2<=-100){ Value2 = -100;} //change to limit if outside limit
 
-    int Speed2 = map(Value2,-100,0,255, 0);
+    int Speed2 = map(Value2,-100,0,voltage_scale*255, 0);
 
     
     digitalWrite(in3, HIGH);
@@ -233,4 +235,12 @@ void L298N:: arc(int Value1, int Value2){   //arc, turn motors at differnet spee
     }
 }
 
+void L298N::set_voltage_scale(float scaling){     //method to change the output voltage stepdown scaling mid program
+  voltage_scale = scaling;
+  
+}
 
+
+float L298N::return_voltage_scaling(){            //return the stepdown voltage scaling factor
+  return voltage_scale;
+}

@@ -10,13 +10,24 @@ private:
   int Left2;
   int Right1;
   int Right2;
+  float voltage_scale;
 
 
 public:
-  Elecsoc_driver_v1();                //no alternative pin setup 
+  //    constructor
+  Elecsoc_driver_v1(float scale);                //no alternative pin setup, just include voltage scaling factor
+  
+  
+  //    drive methods
   void drive(int Value);              
   void turn_left(int Value);    
   void turn_right(int Value);
-  void arc(int Value1, int Value2);  
+  void arc(int Value1, int Value2); 
+
+
+  //    voltage scaling controls
+  void set_voltage_scale(float scale); //change voltage scaling multiplier
+  float return_voltage_scaling();      //read voltage scaling
+
 };
 

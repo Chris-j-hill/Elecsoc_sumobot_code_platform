@@ -11,13 +11,15 @@
 
 
 
-Monster::Monster(){
+Monster::Monster(float scale){
   pin1 = 8;
   pin2 = 7;
   pin3 = 4;
   pin4 = 9;
   speedpin1 = 5;
   speedpin2 = 6;
+
+  voltage_scale = scale;
   
   pinMode(pin1, OUTPUT);
   pinMode(pin2,OUTPUT);
@@ -32,7 +34,7 @@ Monster::Monster(){
 void Monster::drive(int Value){
  
   if (Value>=0){
-    int Speed = map(Value, 0, 100, 0, 255);
+    int Speed = map(Value, 0, 100, 0, voltage_scale*255);
   
     digitalWrite(pin1, HIGH);
     digitalWrite(pin2, LOW);
@@ -43,7 +45,7 @@ void Monster::drive(int Value){
   }
 
   else if (Value>0){
-    int Speed = map(Value, -100, 0, 255, 0);
+    int Speed = map(Value, -100, 0, voltage_scale*255, 0);
   
     digitalWrite(pin1, LOW);
     digitalWrite(pin2, HIGH);
@@ -58,14 +60,14 @@ void Monster::drive(int Value){
 void Monster::setSpeed(int Value){
 
   if (Value>=0){
-    int Speed = map(Value, 0, 100, 0, 255);
+    int Speed = map(Value, 0, 100, 0, voltage_scale*255);
   
      analogWrite(speedpin1, Speed);
      analogWrite(speedpin2, Speed);
   }
   
     else if (Value<0){
-    int Speed = map(Value, -100, 0, 255, 0);
+    int Speed = map(Value, -100, 0, voltage_scale*255, 0);
   
      analogWrite(speedpin1, Speed);
      analogWrite(speedpin2, Speed);
@@ -79,7 +81,7 @@ void Monster::setSpeed(int Value){
 void Monster::turn_left(int Value){
 
   if (Value>=0){
-    int Speed = map(Value, 0, 100, 0, 255);
+    int Speed = map(Value, 0, 100, 0, voltage_scale*255);
   
     digitalWrite(pin1, HIGH);
     digitalWrite(pin2, LOW);
@@ -90,7 +92,7 @@ void Monster::turn_left(int Value){
   }
 
   else if (Value>0){
-    int Speed = map(Value, -100, 0, 255, 0);
+    int Speed = map(Value, -100, 0, voltage_scale*255, 0);
   
     digitalWrite(pin1, LOW);
     digitalWrite(pin2, HIGH);
@@ -108,7 +110,7 @@ void Monster::turn_left(int Value){
 void Monster::turn_right(int Value){
 
   if (Value>=0){
-    int Speed = map(Value, 0, 100, 0, 255);
+    int Speed = map(Value, 0, 100, 0, voltage_scale*255);
   
     digitalWrite(pin1, LOW);
     digitalWrite(pin2, HIGH);
@@ -119,7 +121,7 @@ void Monster::turn_right(int Value){
   }
 
   else if (Value>0){
-    int Speed = map(Value, -100, 0, 255, 0);
+    int Speed = map(Value, -100, 0, voltage_scale*255, 0);
   
     digitalWrite(pin1, HIGH);
     digitalWrite(pin2, LOW);
@@ -133,7 +135,7 @@ void Monster::turn_right(int Value){
 
 void Monster::arc (int Value1, int Value2){
   if (Value1>=0){
-    int Speed = map(Value1, 0, 100, 0, 255);
+    int Speed = map(Value1, 0, 100, 0, voltage_scale*255);
   
     digitalWrite(pin1, LOW);
     digitalWrite(pin2, HIGH);
@@ -143,7 +145,7 @@ void Monster::arc (int Value1, int Value2){
   }
 
   else if (Value1>0){
-    int Speed = map(Value1, -100, 0, 255, 0);
+    int Speed = map(Value1, -100, 0, voltage_scale*255, 0);
   
     digitalWrite(pin1, HIGH);
     digitalWrite(pin2, LOW);
@@ -153,7 +155,7 @@ void Monster::arc (int Value1, int Value2){
   }
 
   if (Value2>=0){
-    int Speed = map(Value2, 0, 100, 0, 255);
+    int Speed = map(Value2, 0, 100, 0, voltage_scale*255);
   
     digitalWrite(pin3, HIGH);
     digitalWrite(pin4, LOW);
@@ -162,7 +164,7 @@ void Monster::arc (int Value1, int Value2){
   }
 
   else if (Value2>0){
-    int Speed = map(Value2, -100, 0, 255, 0);
+    int Speed = map(Value2, -100, 0, voltage_scale*255, 0);
   
     digitalWrite(pin3, LOW);
     digitalWrite(pin4, HIGH);
@@ -172,4 +174,12 @@ void Monster::arc (int Value1, int Value2){
   
 }
 
+void Monster::set_voltage_scale(float scaling){     //method to change the output voltage stepdown scaling mid program
+  voltage_scale = scaling;
+  
+}
 
+
+float Monster::return_voltage_scaling(){            //return the stepdown voltage scaling factor
+  return voltage_scale;
+}
