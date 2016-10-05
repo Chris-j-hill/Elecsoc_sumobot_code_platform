@@ -5,6 +5,8 @@
 #include "Monster.h"
 #include "Elecsoc_driver_v1.h"
 
+float voltage_map();
+
 /*class object names:
 
 
